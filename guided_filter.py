@@ -106,7 +106,7 @@ def guidedfilter2d_color(guide, src, radius, eps, scale=None):
     a = torch.einsum("bichw,bijhw->bjchw", (cov_Ip, inv_sigma))
     b = mean_p - a[:, 0] * mean_I_r - a[:, 1] * mean_I_g - a[:, 2] * mean_I_b # b x C x H x W
 
-    mean_a = torch.stack([boxfilter2d(a[:, i], radius) for i in range(3)], 1) / N
+    mean_a = torch.stack([boxfilter2d(a[:, i], radius) / N for i in range(3)], 1)
     mean_b = boxfilter2d(b, radius) / N
 
     if scale is not None:
